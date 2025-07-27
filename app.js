@@ -37,56 +37,22 @@ function findPath(items, id, path = []) {
   return null;
 }
 
-function MenuItem({ item, activePath, onNavigate }) {
-  const isActive = activePath.includes(item.id);
-  const hasChildren = item.children && item.children.length > 0;
-  return React.createElement(
-    'li',
-    { className: isActive ? 'active' : '' },
-    [
-      // Link to update the active menu ID. Prevent default anchor behavior
-      // because we manually update the hash via onNavigate.
-      React.createElement(
-        'a',
-        {
-          key: 'link',
-          href: `#${item.id}`,
-          onClick: (e) => {
-            e.preventDefault();
-            onNavigate(item.id);
-          }
-        },
-        item.label
-      ),
-      // Recursively render children only if this item is in the active path.
-      hasChildren && isActive
-        ? React.createElement(
-            'ul',
-            { key: 'children' },
-            item.children.map((child) =>
-              React.createElement(MenuItem, {
-                key: child.id,
-                item: child,
-                activePath,
-                onNavigate
-              })
-            )
-          )
-        : null
-    ]
-  );
-}
+// Note: MenuItem is defined globally in menu-components.js and attached
+// to window.MenuItem. See that file for implementation.
 
 function NavigationMenu() {
   const [activeId, navigate] = useActiveId('home');
   // Determine the full path from the root to the active item. If no path
   // exists (e.g. invalid hash), fall back to the active ID itself.
   const activePath = findPath(menuData, activeId) || [activeId];
+  // Use the global MenuItem component defined in menu-components.js. This
+  // indirection allows MenuItem to be reused in other parts of the app.
+  const ItemComponent = window.MenuItem;
   return React.createElement(
     'ul',
     { className: 'nav-menu' },
     menuData.map((item) =>
-      React.createElement(MenuItem, {
+      React.createElement(ItemComponent, {
         key: item.id,
         item,
         activePath,
