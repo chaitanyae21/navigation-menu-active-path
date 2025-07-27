@@ -1,7 +1,20 @@
+/*
+ * Define design tokens at the root level. Using CSS variables makes it easy to
+ * tweak colors, spacing and typography in one place without hunting through
+ * the entire stylesheet. Consumers of this component can override these
+ * variables to customise the appearance.
+ */
+:root {
+  --font-family-base: Arial, sans-serif;
+  --primary-color: #007acc;
+  --border-color: #e5e7eb;
+  --body-padding: 1rem;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family-base);
   margin: 0;
-  padding: 1rem;
+  padding: var(--body-padding);
 }
 
 .nav-menu {
@@ -14,9 +27,11 @@ body {
   margin: 0.25rem 0;
 }
 
+/* Highlight the active link. Using the primary color token allows for easy
+ * theming across the app. */
 .nav-menu li.active > a {
   font-weight: bold;
-  color: #007acc;
+  color: var(--primary-color);
 }
 
 .nav-menu a {
@@ -25,9 +40,11 @@ body {
   cursor: pointer;
 }
 
+/* Nesting lists are indented and separated by a left border. The border color
+ * comes from a variable so it can be updated centrally. */
 .nav-menu ul {
   list-style: none;
   padding-left: 1rem;
   margin-top: 0.25rem;
-  border-left: 2px solid #e5e7eb;
+  border-left: 2px solid var(--border-color);
 }
