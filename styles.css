@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 1rem;
+}
+
+.nav-menu {
+  list-style: none;
+  padding-left: 0;
+  max-width: 300px;
+}
+
+.nav-menu li {
+  margin: 0.25rem 0;
+}
+
+.nav-menu li.active > a {
+  font-weight: bold;
+  color: #007acc;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.nav-menu ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+  border-left: 2px solid #e5e7eb;
+}
